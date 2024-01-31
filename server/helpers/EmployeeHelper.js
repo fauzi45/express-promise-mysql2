@@ -34,6 +34,15 @@ const createEmployeeHelper = async (name, position, departmentId) => {
   }
 };
 
+const updateEmployeeHelper = async (id, name, position, departmentId) => {
+  try {
+    const response = await Employee.updateEmployee(id,name, position, departmentId);
+    return Promise.resolve(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const deleteEmployeeHelper = async (id) => {
   try {
     const response = await Employee.deleteEmployee(id);
@@ -51,4 +60,5 @@ module.exports = {
   getEmployeeDetail,
   createEmployeeHelper,
   deleteEmployeeHelper,
+  updateEmployeeHelper
 };

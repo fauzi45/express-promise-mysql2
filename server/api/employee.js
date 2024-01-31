@@ -22,7 +22,10 @@ const detailEmployee = async (req, res) => {
     const response = await EmployeeHelper.getEmployeeDetail(id);
     return res
       .status(200)
-      .send({ message: "Employee detail data received successfully", data: response });
+      .send({
+        message: "Employee detail data received successfully",
+        data: response,
+      });
   } catch (err) {
     res.status(400).send({
       message: "Employee detail data failed to be received",
@@ -34,13 +37,38 @@ const detailEmployee = async (req, res) => {
 const createEmployee = async (req, res) => {
   try {
     const { name, position, departmentId } = req.body;
-    const response = await EmployeeHelper.createEmployeeHelper(name, position, departmentId);
+    const response = await EmployeeHelper.createEmployeeHelper(
+      name,
+      position,
+      departmentId
+    );
     return res
       .status(200)
       .send({ message: "Employee data successfully created", data: response });
   } catch (err) {
     res.status(400).send({
       message: "Employee data failed to be created",
+      data: err.message,
+    });
+  }
+};
+
+const updateEmployee = async (req, res) => {
+  try {
+    const { id } = req.query;
+    const { name, position, departmentId } = req.body;
+    const response = await EmployeeHelper.updateEmployeeHelper(
+      id,
+      name,
+      position,
+      departmentId
+    );
+    return res
+      .status(200)
+      .send({ message: "Employee data successfully updated", data: response });
+  } catch (err) {
+    res.status(400).send({
+      message: "Employee data failed to be updated",
       data: err.message,
     });
   }
@@ -61,9 +89,10 @@ const deleteEmployee = async (req, res) => {
   }
 };
 
-Router.get('/all', allEmployee);
-Router.get('/detail', detailEmployee);
-Router.post('/create', createEmployee);
-Router.delete('/delete', deleteEmployee);
+Router.get("/all", allEmployee);
+Router.get("/detail", detailEmployee);
+Router.post("/create", createEmployee);
+Router.put("/update", updateEmployee);
+Router.delete("/delete", deleteEmployee);
 
 module.exports = Router;

@@ -39,10 +39,30 @@ const createEmployee = async (name, position, departmentId) => {
   try {
     const poolConnection = await Config.ConnectionPool.getConnection();
     const query = await poolConnection.query(
-      `INSERT INTO employees (Name, Position, DepartmentID) VALUES ('${name}','${position}','${departmentId}');  ;`
+      `INSERT INTO employees (Name, Position, DepartmentID) VALUES ('${name}','${position}','${departmentId}');`
     );
-    console.log(query)
+    console.log(query);
     await poolConnection.connection.release();
+    return Promise.resolve([]);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateEmployee = async (id, name, position, departmentId) => {
+  try {
+    const poolConnection = await Config.ConnectionPool.getConnection();
+    const query = await poolConnection.query(
+      `select * from employees where EmployeeID = ${id}`
+    );
+    await poolConnection.connection.release();
+    const result = Config.__constructQueryResult(query);
+    if (result.length === 0) {
+      throw new Error("Employee with this id doesn't exist");
+    }
+    if (result !== 0) {
+      await poolConnection.query(`update employees set name = '${name ? name : result[0].name}' where EmployeeID = ${id}`);
+    }
     return Promise.resolve([]);
   } catch (error) {
     throw error;
@@ -66,5 +86,6 @@ module.exports = {
   getAllEmployee,
   getDetailEmployee,
   createEmployee,
+  updateEmployee,
   deleteEmployee,
 };
