@@ -34,7 +34,27 @@ const detailProject = async (req, res) => {
   }
 };
 
+const createProject = async (req, res) => {
+  try {
+    ValidationProjectHelper.createProjectValidation(req.body);
+    const { name } = req.body;
+    const response = await ProjectHelper.createProjectHelper(name);
+    return res
+      .status(200)
+      .send({
+        message: "Project data successfully created",
+        data: response,
+      });
+  } catch (err) {
+    res.status(400).send({
+      message: "Project data failed to be created",
+      data: err.message,
+    });
+  }
+};
+
 Router.get('/all', allProject);
 Router.get("/detail", detailProject);
+Router.post("/create", createProject);
 
 module.exports = Router;
