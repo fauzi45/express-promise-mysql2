@@ -5,6 +5,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const employee = require("./server/api/employee");
+
+app.use("/employee", employee);
+
 const port = process.env.NODEJS_PORT || 8000;
 
 app.get("/", (req, res) => {
