@@ -70,7 +70,6 @@ const updateEmployeeDB = async (id, name, position, departmentId) => {
         }' where EmployeeID = ${id}`
       );
     }
-    await poolConnection.connection.release();
     return Promise.resolve([]);
   } catch (error) {
     throw error;
