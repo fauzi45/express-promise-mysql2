@@ -8,7 +8,10 @@ const allDepartment = async (req, res) => {
     const response = await DepartmentHelper.getDepartmentListHelper();
     return res
       .status(200)
-      .send({ message: "Department data received successfully", data: response });
+      .send({
+        message: "Department data received successfully",
+        data: response,
+      });
   } catch (err) {
     res.status(400).send({
       message: "Department data failed to be received",
@@ -22,12 +25,10 @@ const detailDepartment = async (req, res) => {
     ValidationDepartmentHelper.detailDepartmentValidation(req.query);
     const { id } = req.query;
     const response = await DepartmentHelper.getDepartmentDetailHelper(id);
-    return res
-      .status(200)
-      .send({
-        message: "Department detail data received successfully",
-        data: response,
-      });
+    return res.status(200).send({
+      message: "Department detail data received successfully",
+      data: response,
+    });
   } catch (err) {
     res.status(400).send({
       message: "Department detail data failed to be received",
@@ -40,12 +41,13 @@ const createDepartment = async (req, res) => {
   try {
     ValidationDepartmentHelper.createDepartmentValidation(req.body);
     const { name } = req.body;
-    const response = await DepartmentHelper.createDepartmentHelper(
-      name
-    );
+    const response = await DepartmentHelper.createDepartmentHelper(name);
     return res
       .status(200)
-      .send({ message: "Department data successfully created", data: response });
+      .send({
+        message: "Department data successfully created",
+        data: response,
+      });
   } catch (err) {
     res.status(400).send({
       message: "Department data failed to be created",
@@ -59,13 +61,13 @@ const updateDepartment = async (req, res) => {
     ValidationDepartmentHelper.updateDepartmentValidation(req.query);
     const { id } = req.query;
     const { name } = req.body;
-    const response = await DepartmentHelper.updateDepartmentHelper(
-      id,
-      name
-    );
+    const response = await DepartmentHelper.updateDepartmentHelper(id, name);
     return res
       .status(200)
-      .send({ message: "Department data successfully updated", data: response });
+      .send({
+        message: "Department data successfully updated",
+        data: response,
+      });
   } catch (err) {
     res.status(400).send({
       message: "Department data failed to be updated",
@@ -74,8 +76,29 @@ const updateDepartment = async (req, res) => {
   }
 };
 
-Router.get('/all', allDepartment);
-Router.get('/detail', detailDepartment);
-Router.post('/create', createDepartment);
-Router.put('/update', updateDepartment);
+const deleteDepartment = async (req, res) => {
+  try {
+    ValidationDepartmentHelper.deleteDepartmentValidation(req.query);
+    const { id } = req.query;
+    const response = await DepartmentHelper.deleteDepartmentHelper(id);
+    return res
+      .status(200)
+      .send({
+        message: "Department data successfully deleted",
+        data: response,
+      });
+  } catch (err) {
+    res.status(400).send({
+      message: "Department data failed to be deleted",
+      data: err.message,
+    });
+  }
+};
+
+Router.get("/all", allDepartment);
+Router.get("/detail", detailDepartment);
+Router.post("/create", createDepartment);
+Router.put("/update", updateDepartment);
+Router.delete("/delete", deleteDepartment);
+
 module.exports = Router;
