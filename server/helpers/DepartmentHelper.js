@@ -19,7 +19,17 @@ const getDepartmentDetailHelper = async (id) => {
   }
 };
 
+const createDepartmentHelper = async (name) => {
+  try {
+    const response = await Department.createDepartmentDB(name);
+    return Promise.resolve(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
     getDepartmentListHelper,
-    getDepartmentDetailHelper
+    getDepartmentDetailHelper,
+    createDepartmentHelper
 };
