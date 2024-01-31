@@ -5,7 +5,7 @@ const ValidationEmployeeHelper = require("../helpers/ValidationEmployeeHelper");
 
 const allEmployee = async (req, res) => {
   try {
-    const response = await EmployeeHelper.getEmployeeList();
+    const response = await EmployeeHelper.getEmployeeListHelper();
     return res
       .status(200)
       .send({ message: "Employee data received successfully", data: response });
@@ -21,7 +21,7 @@ const detailEmployee = async (req, res) => {
   try {
     ValidationEmployeeHelper.detailEmployeeValidation(req.query);
     const { id } = req.query;
-    const response = await EmployeeHelper.getEmployeeDetail(id);
+    const response = await EmployeeHelper.getEmployeeDetailHelper(id);
     return res
       .status(200)
       .send({

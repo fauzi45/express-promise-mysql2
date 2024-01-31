@@ -1,9 +1,9 @@
 const _ = require("lodash");
 const Employee = require("../services/EmployeeDatabase");
 
-const getEmployeeList = async () => {
+const getEmployeeListHelper = async () => {
   try {
-    const response = await Employee.getAllEmployee();
+    const response = await Employee.getAllEmployeeDB();
     if (response.length === 0) {
       throw new Error("There's no data on employee");
     }
@@ -13,9 +13,9 @@ const getEmployeeList = async () => {
   }
 };
 
-const getEmployeeDetail = async (id) => {
+const getEmployeeDetailHelper = async (id) => {
   try {
-    const response = await Employee.getDetailEmployee(id);
+    const response = await Employee.getDetailEmployeeDB(id);
     if (response.length === 0) {
       throw new Error("Employee with this id doesn't exist");
     }
@@ -27,7 +27,7 @@ const getEmployeeDetail = async (id) => {
 
 const createEmployeeHelper = async (name, position, departmentId) => {
   try {
-    const response = await Employee.createEmployee(name, position, departmentId);
+    const response = await Employee.createEmployeeDB(name, position, departmentId);
     return Promise.resolve(response);
   } catch (error) {
     throw error;
@@ -36,7 +36,7 @@ const createEmployeeHelper = async (name, position, departmentId) => {
 
 const updateEmployeeHelper = async (id, name, position, departmentId) => {
   try {
-    const response = await Employee.updateEmployee(id,name, position, departmentId);
+    const response = await Employee.updateEmployeeDB(id,name, position, departmentId);
     return Promise.resolve(response);
   } catch (error) {
     throw error;
@@ -45,10 +45,7 @@ const updateEmployeeHelper = async (id, name, position, departmentId) => {
 
 const deleteEmployeeHelper = async (id) => {
   try {
-    const response = await Employee.deleteEmployee(id);
-    if (response.length === 0) {
-      throw new Error("Employee with this id doesn't exist");
-    }
+    const response = await Employee.deleteEmployeeDB(id);
     return Promise.resolve(response);
   } catch (error) {
     throw error;
@@ -56,8 +53,8 @@ const deleteEmployeeHelper = async (id) => {
 };
 
 module.exports = {
-  getEmployeeList,
-  getEmployeeDetail,
+  getEmployeeListHelper,
+  getEmployeeDetailHelper,
   createEmployeeHelper,
   deleteEmployeeHelper,
   updateEmployeeHelper
