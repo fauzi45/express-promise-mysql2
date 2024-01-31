@@ -37,9 +37,19 @@ const updateDepartmentHelper = async (id, name) => {
   }
 };
 
+const deleteDepartmentHelper = async (id) => {
+  try {
+    const response = await Department.deleteDepartmentDB(id);
+    return Promise.resolve(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
     getDepartmentListHelper,
     getDepartmentDetailHelper,
     createDepartmentHelper,
-    updateDepartmentHelper
+    updateDepartmentHelper,
+    deleteDepartmentHelper
 };
