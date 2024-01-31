@@ -38,10 +38,19 @@ const getDetailEmployeeDB = async (id) => {
 const createEmployeeDB = async (name, position, departmentId) => {
   try {
     const poolConnection = await Config.ConnectionPool.getConnection();
-    await poolConnection.query(
-      `INSERT INTO employees (Name, Position, DepartmentID) VALUES ('${name}','${position}','${departmentId}');`
+    const query = await poolConnection.query(
+      `select * from departments where DepartmentID = ${departmentId}`
     );
     await poolConnection.connection.release();
+    const result = Config.__constructQueryResult(query);
+    if (result.length === 0) {
+      throw new Error("Department with this id doesn't exist");
+    }
+    if (result !== 0) {
+      await poolConnection.query(
+        `INSERT INTO employees (Name, Position, DepartmentID) VALUES ('${name}','${position}','${departmentId}');`
+      );
+    }
     return Promise.resolve([]);
   } catch (error) {
     throw error;
