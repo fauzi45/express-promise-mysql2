@@ -31,6 +31,21 @@ const detailEmployee = async (req, res) => {
   }
 };
 
+const createEmployee = async (req, res) => {
+  try {
+    const { name, position, departmentId } = req.body;
+    const response = await EmployeeHelper.createEmployeeHelper(name, position, departmentId);
+    return res
+      .status(200)
+      .send({ message: "Employee data successfully created", data: response });
+  } catch (err) {
+    res.status(400).send({
+      message: "Employee data failed to be created",
+      data: err.message,
+    });
+  }
+};
+
 const deleteEmployee = async (req, res) => {
   try {
     const { id } = req.query;
@@ -48,6 +63,7 @@ const deleteEmployee = async (req, res) => {
 
 Router.get('/all', allEmployee);
 Router.get('/detail', detailEmployee);
+Router.post('/create', createEmployee);
 Router.delete('/delete', deleteEmployee);
 
 module.exports = Router;

@@ -35,6 +35,20 @@ const getDetailEmployee = async (id) => {
   }
 };
 
+const createEmployee = async (name, position, departmentId) => {
+  try {
+    const poolConnection = await Config.ConnectionPool.getConnection();
+    const query = await poolConnection.query(
+      `INSERT INTO employees (Name, Position, DepartmentID) VALUES ('${name}','${position}','${departmentId}');  ;`
+    );
+    console.log(query)
+    await poolConnection.connection.release();
+    return Promise.resolve([]);
+  } catch (error) {
+    throw error;
+  }
+};
+
 const deleteEmployee = async (id) => {
   try {
     const poolConnection = await Config.ConnectionPool.getConnection();
@@ -51,5 +65,6 @@ const deleteEmployee = async (id) => {
 module.exports = {
   getAllEmployee,
   getDetailEmployee,
+  createEmployee,
   deleteEmployee,
 };
