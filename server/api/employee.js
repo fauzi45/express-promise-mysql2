@@ -2,7 +2,7 @@ const Router = require("express").Router();
 
 const EmployeeHelper = require("../helpers/EmployeeHelper");
 
-const allKaryawan = async (req, res) => {
+const allEmployee = async (req, res) => {
   try {
     const response = await EmployeeHelper.getEmployeeList();
     return res
@@ -16,6 +16,6 @@ const allKaryawan = async (req, res) => {
   }
 };
 
-Router.get('/all', allKaryawan);
+Router.get('/all', allEmployee);
 
 module.exports = Router;
