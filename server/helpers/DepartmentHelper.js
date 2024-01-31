@@ -28,8 +28,18 @@ const createDepartmentHelper = async (name) => {
   }
 };
 
+const updateDepartmentHelper = async (id, name) => {
+  try {
+    const response = await Department.updateDepartmentDB(id,name);
+    return Promise.resolve(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
     getDepartmentListHelper,
     getDepartmentDetailHelper,
-    createDepartmentHelper
+    createDepartmentHelper,
+    updateDepartmentHelper
 };
