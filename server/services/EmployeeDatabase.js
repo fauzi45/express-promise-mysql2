@@ -7,16 +7,14 @@ const getAllEmployeeDB = async () => {
     const query = await poolConnection.query(
       "select employees.EmployeeID as EmployeeID, employees.name AS EmployeeName, employees.Position as EmployeePosition, departments.Name as DeparmentName  from employees inner join departments on departments.DepartmentID = employees.DepartmentID;"
     );
-    if (!query) {
-      throw new Error("Failed to get data employee");
-    }
     await poolConnection.connection.release();
     const result = Config.__constructQueryResult(query);
-
+    if (result.length === 0) {
+      throw new Error("There's no data on employee");
+    }
     return Promise.resolve(result);
   } catch (error) {
-    console.log({ message: error });
-    return Promise.resolve([]);
+    throw error;
   }
 };
 
@@ -26,9 +24,11 @@ const getDetailEmployeeDB = async (id) => {
     const query = await poolConnection.query(
       `select employees.EmployeeID as EmployeeID, employees.name AS EmployeeName, employees.Position as EmployeePosition, departments.Name as DeparmentName  from employees inner join departments on departments.DepartmentID = employees.DepartmentID WHERE employees.EmployeeID = ${id} ;`
     );
-
     await poolConnection.connection.release();
     const result = Config.__constructQueryResult(query);
+    if (result.length === 0) {
+      throw new Error("Employee with this id doesn't exist");
+    }
     return Promise.resolve(result);
   } catch (error) {
     throw error;
@@ -93,7 +93,6 @@ const deleteEmployeeDB = async (id) => {
         `DELETE from employees where EmployeeID = '${id}' ;`
       );
     }
-    await poolConnection.connection.release();
     return Promise.resolve([]);
   } catch (error) {
     throw error;

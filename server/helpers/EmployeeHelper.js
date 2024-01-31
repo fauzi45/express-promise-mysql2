@@ -4,9 +4,6 @@ const Employee = require("../services/EmployeeDatabase");
 const getEmployeeListHelper = async () => {
   try {
     const response = await Employee.getAllEmployeeDB();
-    if (response.length === 0) {
-      throw new Error("There's no data on employee");
-    }
     return Promise.resolve(response);
   } catch (error) {
     throw error;
@@ -16,9 +13,6 @@ const getEmployeeListHelper = async () => {
 const getEmployeeDetailHelper = async (id) => {
   try {
     const response = await Employee.getDetailEmployeeDB(id);
-    if (response.length === 0) {
-      throw new Error("Employee with this id doesn't exist");
-    }
     return Promise.resolve(response);
   } catch (error) {
     throw error;
