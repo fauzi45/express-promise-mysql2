@@ -70,9 +70,32 @@ const updateProjectDB = async (id, name) => {
     }
   };
 
+  const deleteProjectDB = async (id) => {
+    try {
+      const poolConnection = await Config.ConnectionPool.getConnection();
+      const query = await poolConnection.query(
+        `select * from Projects where ProjectID = ${id}`
+      );
+      await poolConnection.connection.release();
+      const result = Config.__constructQueryResult(query);
+      if (result.length === 0) {
+        throw new Error("Project with this id doesn't exist");
+      }
+      if (result !== 0) {
+        await poolConnection.query(
+          `DELETE from Projects where ProjectID = '${id}' ;`
+        );
+      }
+      return Promise.resolve([]);
+    } catch (error) {
+      throw error;
+    }
+  };
+
 module.exports = {
   getAllProjectDB,
   getDetailProjectDB,
   createProjectDB,
   updateProjectDB,
+  deleteProjectDB
 };

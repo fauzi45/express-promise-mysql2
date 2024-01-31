@@ -1,4 +1,3 @@
-const _ = require("lodash");
 const Project = require("../services/ProjectDatabase");
 
 const getProjectListHelper = async () => {
@@ -37,9 +36,19 @@ const updateProjectHelper = async (id, name) => {
   }
 };
 
+const deleteProjectHelper = async (id) => {
+  try {
+    const response = await Project.deleteProjectDB(id);
+    return Promise.resolve(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getProjectListHelper,
   getProjectDetailHelper,
   createProjectHelper,
   updateProjectHelper,
+  deleteProjectHelper
 };

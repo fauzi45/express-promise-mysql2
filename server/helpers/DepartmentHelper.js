@@ -1,4 +1,3 @@
-const _ = require("lodash");
 const Department = require("../services/DepartmentDatabase");
 
 const getDepartmentListHelper = async () => {
