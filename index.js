@@ -8,10 +8,12 @@ app.use(express.urlencoded({ extended: true }));
 const employee = require("./server/api/employee");
 const project = require("./server/api/project");
 const department = require("./server/api/department");
+const employeeproject = require("./server/api/project");
 
 app.use("/employee", employee);
 app.use("/project", project);
 app.use("/department", department);
+app.use("/employee-project", employeeproject);
 
 const port = process.env.NODEJS_PORT || 8000;
 
