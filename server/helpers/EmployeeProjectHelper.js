@@ -19,7 +19,21 @@ const getEmployeeProjectDetailHelper = async (id) => {
   }
 };
 
+const createEmployeeProjectHelper = async (employeeId, projectId, role) => {
+  try {
+    const response = await EmployeeProject.createEmployeeProjectDB(
+      employeeId,
+      projectId,
+      role
+    );
+    return Promise.resolve(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getEmployeeProjectList,
   getEmployeeProjectDetailHelper,
+  createEmployeeProjectHelper
 };

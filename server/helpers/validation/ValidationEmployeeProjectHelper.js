@@ -11,6 +11,19 @@ const detailEmployeeProjectValidation = (data) => {
   }
 };
 
+const createEmployeeProjectValidation = (data) => {
+    const schema = Joi.object({
+      employeeId: Joi.number().required(),
+      projectId: Joi.number().required(),
+      role: Joi.string().required(),
+    });
+  
+    if (schema.validate(data).error) {
+      throw Boom.badRequest(schema.validate(data).error);
+    }
+  }
+
 module.exports = {
   detailEmployeeProjectValidation,
+  createEmployeeProjectValidation,
 };

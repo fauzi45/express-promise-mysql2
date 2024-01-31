@@ -8,7 +8,10 @@ const allEmployeeProject = async (req, res) => {
     const response = await EmployeeProjectHelper.getEmployeeProjectList();
     return res
       .status(200)
-      .send({ message: "Employee Project data received successfully", data: response });
+      .send({
+        message: "Employee Project data received successfully",
+        data: response,
+      });
   } catch (err) {
     res.status(400).send({
       message: "Employee Project data failed to be received",
@@ -21,7 +24,9 @@ const detailEmployeeProject = async (req, res) => {
   try {
     ValidationEmployeeProjectHelper.detailEmployeeProjectValidation(req.query);
     const { id } = req.query;
-    const response = await EmployeeProjectHelper.getEmployeeProjectDetailHelper(id);
+    const response = await EmployeeProjectHelper.getEmployeeProjectDetailHelper(
+      id
+    );
     return res.status(200).send({
       message: "Employee Project detail data received successfully",
       data: response,
@@ -34,7 +39,29 @@ const detailEmployeeProject = async (req, res) => {
   }
 };
 
-Router.get('/all', allEmployeeProject);
-Router.get('/detail', detailEmployeeProject);
+const createEmployeeProject = async (req, res) => {
+  try {
+    ValidationEmployeeProjectHelper.createEmployeeProjectValidation(req.body);
+    const { employeeId, projectId, role } = req.body;
+    const response = await EmployeeProjectHelper.createEmployeeProjectHelper(
+      employeeId,
+      projectId,
+      role
+    );
+    return res.status(200).send({
+      message: "Employee Project data successfully created",
+      data: response,
+    });
+  } catch (err) {
+    res.status(400).send({
+      message: "Employee Project data failed to be created",
+      data: err.message,
+    });
+  }
+};
+
+Router.get("/all", allEmployeeProject);
+Router.get("/detail", detailEmployeeProject);
+Router.post("/create", createEmployeeProject);
 
 module.exports = Router;
