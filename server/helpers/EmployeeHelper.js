@@ -13,6 +13,21 @@ const getEmployeeList = async () => {
 const getEmployeeDetail = async (id) => {
   try {
     const response = await Employee.getDetailEmployee(id);
+    if (response.length === 0) {
+      throw new Error("Employee with this id doesn't exist");
+    }
+    return Promise.resolve(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteEmployeeHelper = async (id) => {
+  try {
+    const response = await Employee.deleteEmployee(id);
+    if (response.length === 0) {
+      throw new Error("Employee with this id doesn't exist");
+    }
     return Promise.resolve(response);
   } catch (error) {
     throw error;
@@ -22,4 +37,5 @@ const getEmployeeDetail = async (id) => {
 module.exports = {
   getEmployeeList,
   getEmployeeDetail,
+  deleteEmployeeHelper,
 };
