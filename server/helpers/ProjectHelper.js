@@ -27,8 +27,19 @@ const createProjectHelper = async (name) => {
     throw error;
   }
 };
+
+const updateProjectHelper = async (id, name) => {
+  try {
+    const response = await Project.updateProjectDB(id,name);
+    return Promise.resolve(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getProjectListHelper,
   getProjectDetailHelper,
   createProjectHelper,
+  updateProjectHelper,
 };
