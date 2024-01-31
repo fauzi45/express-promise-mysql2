@@ -1,7 +1,7 @@
 const _ = require("lodash");
 const Config = require("./config");
 
-const getAllDepartmentsDB = async () => {
+const getAllDepartmentDB = async () => {
   try {
     const poolConnection = await Config.ConnectionPool.getConnection();
     const query = await poolConnection.query("select * from departments;");
@@ -16,7 +16,7 @@ const getAllDepartmentsDB = async () => {
   }
 };
 
-const getDetailDepartmentsDB = async (id) => {
+const getDetailDepartmentDB = async (id) => {
   try {
     const poolConnection = await Config.ConnectionPool.getConnection();
     const query = await poolConnection.query(
@@ -93,8 +93,8 @@ const updateDepartmentDB = async (id, name) => {
   };
 
 module.exports = {
-  getAllDepartmentsDB,
-  getDetailDepartmentsDB,
+  getAllDepartmentDB,
+  getDetailDepartmentDB,
   createDepartmentDB,
   updateDepartmentDB,
   deleteDepartmentDB

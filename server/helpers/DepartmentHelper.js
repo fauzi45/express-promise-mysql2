@@ -3,7 +3,7 @@ const Department = require("../services/DepartmentDatabase");
 
 const getDepartmentListHelper = async () => {
   try {
-    const response = await Department.getAllDepartmentsDB();
+    const response = await Department.getAllDepartmentDB();
     return Promise.resolve(response);
   } catch (error) {
     throw error;
@@ -12,7 +12,7 @@ const getDepartmentListHelper = async () => {
 
 const getDepartmentDetailHelper = async (id) => {
   try {
-    const response = await Department.getDetailDepartmentsDB(id);
+    const response = await Department.getDetailDepartmentDB(id);
     return Promise.resolve(response);
   } catch (error) {
     throw error;
