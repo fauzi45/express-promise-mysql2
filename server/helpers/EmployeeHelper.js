@@ -1,4 +1,3 @@
-const _ = require("lodash");
 const Employee = require("../services/EmployeeDatabase");
 
 const getEmployeeListHelper = async () => {
