@@ -28,5 +28,7 @@ const __constructQueryResult = (query) => {
     return result;
   };
 
-module.exports = {
-};
+  module.exports = {
+    ConnectionPool,
+    __constructQueryResult,
+  };
