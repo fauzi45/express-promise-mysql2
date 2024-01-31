@@ -1,6 +1,7 @@
 const Router = require("express").Router();
 
 const EmployeeHelper = require("../helpers/EmployeeHelper");
+const ValidationEmployeeHelper = require("../helpers/ValidationEmployeeHelper");
 
 const allEmployee = async (req, res) => {
   try {
@@ -18,6 +19,7 @@ const allEmployee = async (req, res) => {
 
 const detailEmployee = async (req, res) => {
   try {
+    ValidationEmployeeHelper.detailEmployeeValidation(req.query);
     const { id } = req.query;
     const response = await EmployeeHelper.getEmployeeDetail(id);
     return res
@@ -36,6 +38,7 @@ const detailEmployee = async (req, res) => {
 
 const createEmployee = async (req, res) => {
   try {
+    ValidationEmployeeHelper.createEmployeeValidation(req.body);
     const { name, position, departmentId } = req.body;
     const response = await EmployeeHelper.createEmployeeHelper(
       name,
@@ -55,6 +58,7 @@ const createEmployee = async (req, res) => {
 
 const updateEmployee = async (req, res) => {
   try {
+    ValidationEmployeeHelper.updateEmployeeValidation(req.query);
     const { id } = req.query;
     const { name, position, departmentId } = req.body;
     const response = await EmployeeHelper.updateEmployeeHelper(
@@ -76,6 +80,7 @@ const updateEmployee = async (req, res) => {
 
 const deleteEmployee = async (req, res) => {
   try {
+    ValidationEmployeeHelper.deleteEmployeeValidation(req.query);
     const { id } = req.query;
     const response = await EmployeeHelper.deleteEmployeeHelper(id);
     return res
