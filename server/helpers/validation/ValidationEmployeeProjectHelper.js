@@ -33,8 +33,19 @@ const createEmployeeProjectValidation = (data) => {
     }
   };
 
+  const deleteEmployeeProjectValidation = (data) => {
+    const schema = Joi.object({
+      id: Joi.number().required(),
+    });
+  
+    if (schema.validate(data).error) {
+      throw Boom.badRequest(schema.validate(data).error);
+    }
+  };
+
 module.exports = {
   detailEmployeeProjectValidation,
   createEmployeeProjectValidation,
-  updateEmployeeProjectValidation
+  updateEmployeeProjectValidation,
+  deleteEmployeeProjectValidation
 };

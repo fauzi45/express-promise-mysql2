@@ -50,5 +50,6 @@ module.exports = {
   getProjectDetailHelper,
   createProjectHelper,
   updateProjectHelper,
-  deleteProjectHelper
+  deleteProjectHelper,
+  
 };

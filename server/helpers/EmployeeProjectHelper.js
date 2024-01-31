@@ -46,9 +46,19 @@ const updateEmployeeProjectHelper = async (id, employeeId, projectId, role) => {
   }
 };
 
+const deleteEmployeeProjectHelper = async (id) => {
+  try {
+    const response = await EmployeeProject.deleteEmployeeProjectDB(id);
+    return Promise.resolve(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getEmployeeProjectList,
   getEmployeeProjectDetailHelper,
   createEmployeeProjectHelper,
-  updateEmployeeProjectHelper
+  updateEmployeeProjectHelper,
+  deleteEmployeeProjectHelper
 };

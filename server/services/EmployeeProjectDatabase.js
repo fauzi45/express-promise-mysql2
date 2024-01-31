@@ -76,9 +76,32 @@ const updateEmployeeProjectDB = async (id, employeeId, projectId, role) => {
   }
 };
 
+const deleteEmployeeProjectDB = async (id) => {
+  try {
+    const poolConnection = await Config.ConnectionPool.getConnection();
+    const query = await poolConnection.query(
+      `select * from employeeprojects where EmployeeProjectID = ${id}`
+    );
+    await poolConnection.connection.release();
+    const result = Config.__constructQueryResult(query);
+    if (result.length === 0) {
+      throw new Error("Employee Project with this id doesn't exist");
+    }
+    if (result !== 0) {
+      await poolConnection.query(
+        `DELETE from employeeprojects where EmployeeProjectID = '${id}' ;`
+      );
+    }
+    return Promise.resolve([]);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getAllEmployeeProject,
   getDetailEmployeeProjectDB,
   createEmployeeProjectDB,
   updateEmployeeProjectDB,
+  deleteEmployeeProjectDB,
 };
