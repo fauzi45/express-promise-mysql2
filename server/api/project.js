@@ -1,10 +1,10 @@
 const Router = require("express").Router();
 
-const ProjectHelper = require("../helpers/ProjectHelper");
+const Project = require("../helpers/ProjectHelper");
 
 const allEmployee = async (req, res) => {
   try {
-    const response = await ProjectHelper.getProjectList();
+    const response = await Project.getProjectListHelper();
     return res
       .status(200)
       .send({ message: "Project data received successfully", data: response });

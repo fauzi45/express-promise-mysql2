@@ -1,9 +1,9 @@
 const _ = require("lodash");
-const ProjectDatabase = require("../services/ProjectDatabase");
+const Project = require("../services/ProjectDatabase");
 
-const getProjectList = async () => {
+const getProjectListHelper = async () => {
   try {
-    const response = await ProjectDatabase.getAllProjects();
+    const response = await Project.getAllProjectDB();
     return Promise.resolve(response);
   } catch (error) {
     throw error;
@@ -11,5 +11,5 @@ const getProjectList = async () => {
 };
 
 module.exports = {
-    getProjectList,
+  getProjectListHelper,
 };
