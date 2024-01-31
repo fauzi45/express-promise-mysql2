@@ -1,10 +1,11 @@
 const Router = require("express").Router();
 
-const Project = require("../helpers/ProjectHelper");
+const ProjectHelper = require("../helpers/ProjectHelper");
+const ValidationProjectHelper = require("../helpers/validation/ValidationProjectHelper");
 
-const allEmployee = async (req, res) => {
+const allProject = async (req, res) => {
   try {
-    const response = await Project.getProjectListHelper();
+    const response = await ProjectHelper.getProjectListHelper();
     return res
       .status(200)
       .send({ message: "Project data received successfully", data: response });
@@ -16,6 +17,24 @@ const allEmployee = async (req, res) => {
   }
 };
 
-Router.get('/all', allEmployee);
+const detailProject = async (req, res) => {
+  try {
+    ValidationProjectHelper.detailProjectValidation(req.query);
+    const { id } = req.query;
+    const response = await ProjectHelper.getProjectDetailHelper(id);
+    return res.status(200).send({
+      message: "Project detail data received successfully",
+      data: response,
+    });
+  } catch (err) {
+    res.status(400).send({
+      message: "Project detail data failed to be received",
+      data: err.message,
+    });
+  }
+};
+
+Router.get('/all', allProject);
+Router.get("/detail", detailProject);
 
 module.exports = Router;

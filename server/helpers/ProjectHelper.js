@@ -10,6 +10,16 @@ const getProjectListHelper = async () => {
   }
 };
 
+const getProjectDetailHelper = async (id) => {
+  try {
+    const response = await Project.getDetailProjectDB(id);
+    return Promise.resolve(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   getProjectListHelper,
+  getProjectDetailHelper
 };
