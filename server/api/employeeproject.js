@@ -6,12 +6,10 @@ const ValidationEmployeeProjectHelper = require("../helpers/validation/Validatio
 const allEmployeeProject = async (req, res) => {
   try {
     const response = await EmployeeProjectHelper.getEmployeeProjectList();
-    return res
-      .status(200)
-      .send({
-        message: "Employee Project data received successfully",
-        data: response,
-      });
+    return res.status(200).send({
+      message: "Employee Project data received successfully",
+      data: response,
+    });
   } catch (err) {
     res.status(400).send({
       message: "Employee Project data failed to be received",
@@ -60,8 +58,31 @@ const createEmployeeProject = async (req, res) => {
   }
 };
 
+const updateEmployeeProject = async (req, res) => {
+  try {
+    ValidationEmployeeProjectHelper.updateEmployeeProjectValidation(req.query);
+    const { id } = req.query;
+    const { employeeId, projectId, role } = req.body;
+    const response = await EmployeeProjectHelper.updateEmployeeProjectHelper(
+      id,
+      employeeId,
+      projectId,
+      role
+    );
+    return res.status(200).send({
+      message: "Employee Project data successfully updated",
+      data: response,
+    });
+  } catch (err) {
+    res.status(400).send({
+      message: "Employee Project data failed to be updated",
+      data: err.message,
+    });
+  }
+};
+
 Router.get("/all", allEmployeeProject);
 Router.get("/detail", detailEmployeeProject);
 Router.post("/create", createEmployeeProject);
-
+Router.put("/update", updateEmployeeProject);
 module.exports = Router;
