@@ -1,7 +1,7 @@
 const Router = require("express").Router();
 
 const EmployeeHelper = require("../helpers/EmployeeHelper");
-const ValidationEmployeeHelper = require("../helpers/ValidationEmployeeHelper");
+const ValidationEmployeeHelper = require("../helpers/validation/ValidationEmployeeHelper");
 
 const allEmployee = async (req, res) => {
   try {
