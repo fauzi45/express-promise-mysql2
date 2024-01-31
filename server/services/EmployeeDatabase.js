@@ -38,7 +38,7 @@ const getDetailEmployeeDB = async (id) => {
 const createEmployeeDB = async (name, position, departmentId) => {
   try {
     const poolConnection = await Config.ConnectionPool.getConnection();
-    const query = await poolConnection.query(
+    await poolConnection.query(
       `INSERT INTO employees (Name, Position, DepartmentID) VALUES ('${name}','${position}','${departmentId}');`
     );
     await poolConnection.connection.release();
