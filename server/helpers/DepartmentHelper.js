@@ -9,8 +9,9 @@ const getDepartmentListHelper = async () => {
   }
 };
 
-const getDepartmentDetailHelper = async (id) => {
+const getDepartmentDetailHelper = async (dataObject) => {
   try {
+    const { id} = dataObject;
     const response = await Department.getDetailDepartmentDB(id);
     return Promise.resolve(response);
   } catch (error) {

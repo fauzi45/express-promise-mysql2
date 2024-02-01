@@ -68,7 +68,7 @@ const updateEmployeeDB = async (id, name, position, departmentId) => {
     if (result.length === 0) {
       throw new Error("Employee with this id doesn't exist");
     }
-    if (departmentId) {
+    if (departmentId) { 
       const queryDepartment = await poolConnection.query(
         `select * from departments where DepartmentID = ${departmentId}`
       ); 
