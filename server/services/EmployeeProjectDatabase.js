@@ -38,6 +38,20 @@ const getDetailEmployeeProjectDB = async (id) => {
 const createEmployeeProjectDB = async (employeeId, projectId, role) => {
   try {
     const poolConnection = await Config.ConnectionPool.getConnection();
+    const queryEmployee = await poolConnection.query(
+      `select * from employees where EmployeeID = ${employeeId}`
+    );
+    const queryProject = await poolConnection.query(
+      `select * from projects where ProjectID = ${projectId}`
+    );
+    const resultEmployee = Config.__constructQueryResult(queryEmployee);
+    const resultProject = Config.__constructQueryResult(queryProject);
+    if (resultEmployee.length === 0) {
+      throw new Error("Employee with this id doesn't exist");
+    }
+    if (resultProject.length === 0) {
+      throw new Error("Project with this id doesn't exist");
+    }
     await poolConnection.query(
       `INSERT INTO employeeprojects (EmployeeID, ProjectID, Role) VALUES ('${employeeId}', '${projectId}', '${role}');`
     );
@@ -58,6 +72,24 @@ const updateEmployeeProjectDB = async (id, employeeId, projectId, role) => {
     const result = Config.__constructQueryResult(query);
     if (result.length === 0) {
       throw new Error("Employee Project with this id doesn't exist");
+    }
+    if (employeeId) {
+      const queryEmployee = await poolConnection.query(
+        `select * from employees where EmployeeID = ${employeeId}`
+      );
+      const resultEmployee = Config.__constructQueryResult(queryEmployee);
+      if (resultEmployee.length === 0) {
+        throw new Error("Employee with this id doesn't exist");
+      }
+    }
+    if (projectId) {
+      const queryProject = await poolConnection.query(
+        `select * from projects where ProjectID = ${projectId}`
+      );
+      const resultProject = Config.__constructQueryResult(queryProject);
+      if (resultProject.length === 0) {
+        throw new Error("Project with this id doesn't exist");
+      }
     }
     if (result !== 0) {
       await poolConnection.query(
